@@ -31,13 +31,16 @@ public class MainManager : MonoBehaviour
     //制限時間テキスト
     public Text TimelimitText;
     //正答数関連
-    public Text AnswerRateText;
+    //public Text AnswerRateText;
     int Allque = 0;
     int Correctque = 0;
     //問題数
     public Button[] Probrem;
     //解答判定
     int answers = 2;
+    //SEフラグ
+    bool SEflg = true;
+
 
     enum GAME_MODE
     {
@@ -47,10 +50,17 @@ public class MainManager : MonoBehaviour
         FINISH,
     };
 
+    //サウンド関連
+    AudioSource audiosource;
+    public AudioClip[] Clip; 
+    //public AudioClip CorrectClip;
+    //public AudioClip InCorrectClip;
+
     GAME_MODE type = GAME_MODE.START;
     // Start is called before the first frame update
     void Start()
     {
+        audiosource = GetComponent<AudioSource>();
         TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
@@ -97,13 +107,14 @@ public class MainManager : MonoBehaviour
                 {
                     if (Answer[0].isActiveAndEnabled)Answer[0].gameObject.SetActive(false);
                     if (Answer[1].isActiveAndEnabled) Answer[1].gameObject.SetActive(false);
-                    AnswerRateText.text = string.Format("正答率：{0}%", Correctque * 100 / Allque);
+                    //AnswerRateText.text = string.Format("正答率：{0}%", Correctque * 100 / Allque);
                     Debug.Log(Correctque * 100 / Allque);
                     display();
                     answers = 2;
                     answersNumber += 1;
                     type = GAME_MODE.PLAY;
                     timer2 = 0;
+                    SEflg = true;
                 }
                 break;
 
@@ -166,12 +177,23 @@ public class MainManager : MonoBehaviour
             if (Pos[answers] == Con[0])
             {
                 Answer[0].gameObject.SetActive(true);
+                if (SEflg)
+                {
+                    audiosource.PlayOneShot(Clip[0]);
+                    SEflg = false;
+                }
+                
                 Correctque += 1;
                 Debug.Log("judge : true");
             }
             else
             {
                 Answer[1].gameObject.SetActive(true);
+                if (SEflg)
+                {
+                    audiosource.PlayOneShot(Clip[1]);
+                    SEflg = false;
+                }
                 Debug.Log("judge : false");
             }
         }
@@ -182,12 +204,22 @@ public class MainManager : MonoBehaviour
             if (Pos[answers] == Con[1])
             {
                 Answer[0].gameObject.SetActive(true);
+                if (SEflg)
+                {
+                    audiosource.PlayOneShot(Clip[0]);
+                    SEflg = false;
+                }
                 Correctque += 1;
                 Debug.Log("judge : true");
             }
             else
             {
                 Answer[1].gameObject.SetActive(true);
+                if (SEflg)
+                {
+                    audiosource.PlayOneShot(Clip[1]);
+                    SEflg = false;
+                }
                 Debug.Log("judge : false");
             }
         }
