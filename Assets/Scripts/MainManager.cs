@@ -51,7 +51,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TimelimitText.text = Timelimit.ToString();
+        TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
         for (int i = 0; i < Answer.Length; i++) Answer[i].gameObject.SetActive(false);
@@ -97,7 +97,8 @@ public class MainManager : MonoBehaviour
                 {
                     if (Answer[0].isActiveAndEnabled)Answer[0].gameObject.SetActive(false);
                     if (Answer[1].isActiveAndEnabled) Answer[1].gameObject.SetActive(false);
-                    AnswerRateText.text = string.Format("正答数：{0}%", Correctque * 100 / Allque);
+                    AnswerRateText.text = string.Format("正答率：{0}%", Correctque * 100 / Allque);
+                    Debug.Log(Correctque * 100 / Allque);
                     display();
                     answers = 2;
                     answersNumber += 1;
@@ -146,7 +147,8 @@ public class MainManager : MonoBehaviour
     void Timer()
     {
         Timelimit -= 1;
-        TimelimitText.text = Timelimit.ToString();
+        TimelimitText.text = string.Format("残り時間：{0}",Timelimit);
+        //TimelimitText.text = Timelimit.ToString();
         timer = 0;
     }
 
