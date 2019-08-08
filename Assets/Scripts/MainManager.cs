@@ -20,8 +20,9 @@ public class MainManager : MonoBehaviour
     //制限時間
     public int Timelimit;
     //計測タイマー
-    float timer = 0;
+    float timer1 = 0;
     float timer2 = 0;
+    float timer3 = 0;
     //お題用配列
     string[] Thema = {"大きい","小さい"};
     //解答テキスト用配列
@@ -40,6 +41,9 @@ public class MainManager : MonoBehaviour
     int answers = 2;
     //SEフラグ
     bool SEflg = true;
+    //スタート画面
+    public Text ReadyText;
+    public Text GoText;
     //リザルト画面
     public GameObject ResultPanel;
     public Text AnswerRateText;
@@ -71,7 +75,8 @@ public class MainManager : MonoBehaviour
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
         for (int i = 0; i < Answer.Length; i++) Answer[i].gameObject.SetActive(false);
         //------------
-        
+        ReadyText.gameObject.SetActive(false);
+        GoText.gameObject.SetActive(false);
         ResultPanel.gameObject.SetActive(false);
         display();
         
@@ -85,15 +90,22 @@ public class MainManager : MonoBehaviour
         switch (type)
         {
             case GAME_MODE.START:
-                type = GAME_MODE.PLAY;
+                timer1 += Time.deltaTime;
+                ReadyText.gameObject.SetActive(true);
+                GoText.gameObject.SetActive(true);
+                if (timer1 > 4)
+                {
+                    type = GAME_MODE.PLAY;
+                    timer1 = 0;
+                }
                 break;
             case GAME_MODE.PLAY:
-                timer += Time.deltaTime;
+                timer2 += Time.deltaTime;
                 if(Timelimit != 0)
                 {
                     Debug.Log("asdfghjk");
                     //制限時間
-                    if (timer >= 1)
+                    if (timer2 >= 1)
                     {
                         
                         Timer();
@@ -110,8 +122,8 @@ public class MainManager : MonoBehaviour
 
             case GAME_MODE.JUDGE:
                 judge();
-                timer2 += Time.deltaTime;
-                if (timer2 >= 2)
+                timer3 += Time.deltaTime;
+                if (timer3 >= 2)
                 {
                     if (Answer[0].isActiveAndEnabled)Answer[0].gameObject.SetActive(false);
                     if (Answer[1].isActiveAndEnabled) Answer[1].gameObject.SetActive(false);
@@ -121,7 +133,7 @@ public class MainManager : MonoBehaviour
                     answers = 2;
                     answersNumber += 1;
                     type = GAME_MODE.PLAY;
-                    timer2 = 0;
+                    timer3 = 0;
                     SEflg = true;
                 }
                 break;
@@ -176,7 +188,7 @@ public class MainManager : MonoBehaviour
         Timelimit -= 1;
         TimelimitText.text = string.Format("残り時間：{0}",Timelimit);
         //TimelimitText.text = Timelimit.ToString();
-        timer = 0;
+        timer2 = 0;
     }
 
     public void Button(int i)
