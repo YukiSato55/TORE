@@ -27,7 +27,7 @@ public class MainManager : MonoBehaviour
     //解答テキスト用配列
     public Text[] Answer = new Text[2];
     //お題用テキスト
-    public Text ThemaText;
+    public Text ThemaUpDownText;
     //制限時間テキスト
     public Text TimelimitText;
     //正答数関連
@@ -40,6 +40,10 @@ public class MainManager : MonoBehaviour
     int answers = 2;
     //SEフラグ
     bool SEflg = true;
+    //リザルト画面
+    public GameObject ResultPanel;
+    public Text AnswerRateText;
+    public Text ScoreText;
 
 
     enum GAME_MODE
@@ -62,9 +66,13 @@ public class MainManager : MonoBehaviour
     {
         audiosource = GetComponent<AudioSource>();
         TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
+        //初期化処理
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
         for (int i = 0; i < Answer.Length; i++) Answer[i].gameObject.SetActive(false);
+        //------------
+        
+        ResultPanel.gameObject.SetActive(false);
         display();
         
 
@@ -107,8 +115,8 @@ public class MainManager : MonoBehaviour
                 {
                     if (Answer[0].isActiveAndEnabled)Answer[0].gameObject.SetActive(false);
                     if (Answer[1].isActiveAndEnabled) Answer[1].gameObject.SetActive(false);
-                    //AnswerRateText.text = string.Format("正答率：{0}%", Correctque * 100 / Allque);
-                    Debug.Log(Correctque * 100 / Allque);
+                    
+                    //Debug.Log(Correctque * 100 / Allque);
                     display();
                     answers = 2;
                     answersNumber += 1;
@@ -119,6 +127,9 @@ public class MainManager : MonoBehaviour
                 break;
 
             case GAME_MODE.FINISH:
+                AnswerRateText.text = string.Format("{0}%", Correctque * 100 / Allque);
+                ScoreText.text = string.Format("{0}点", Correctque * 100);
+                ResultPanel.gameObject.SetActive(true);
                 break;
         }
     }
@@ -150,8 +161,13 @@ public class MainManager : MonoBehaviour
         Array.Reverse(Con);
         //----------------------------
         //Debug.Log(Con[0] + " " + Con[1]);
+        //お題用処理
         ThemaNumber = UnityEngine.Random.Range(0, 2);
-        ThemaText.text = string.Format("『{0}』のはどっち？", Thema[ThemaNumber]);
+        //ThemaText.text = string.Format("『{0}』のはどっち？", Thema[ThemaNumber]);
+        ThemaUpDownText.text = Thema[ThemaNumber];
+        if (ThemaNumber == 0) ThemaUpDownText.color = Color.red;
+        else if (ThemaNumber == 1) ThemaUpDownText.color = Color.blue;
+        //-------------------------------------------------------------
         //Debug.Log("answers : " + answers);
     }
 
