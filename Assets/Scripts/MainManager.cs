@@ -45,6 +45,8 @@ public class MainManager : MonoBehaviour
     public GameObject RankingPanel;
     public Text AnswerRateText;
     public Text ScoreText;
+    [System.NonSerialized]
+    public int Score = 0;
 
 
     enum GAME_MODE
@@ -126,7 +128,7 @@ public class MainManager : MonoBehaviour
                 timer2 += Time.deltaTime;
                 if(Timelimit != 0)
                 {
-                    Debug.Log("asdfghjk");
+                    //Debug.Log("asdfghjk");
                     //制限時間
                     if (timer2 >= 1)
                     {
@@ -151,7 +153,7 @@ public class MainManager : MonoBehaviour
                     if (Answer[0].isActiveAndEnabled)Answer[0].gameObject.SetActive(false);
                     if (Answer[1].isActiveAndEnabled) Answer[1].gameObject.SetActive(false);
                     
-                    //Debug.Log(Correctque * 100 / Allque);
+                    ////Debug.Log(Correctque * 100 / Allque);
                     display();
                     answers = 2;
                     answersNumber += 1;
@@ -179,8 +181,10 @@ public class MainManager : MonoBehaviour
 
             case GAME_MODE.FINISH:
                 ThemaUpDownText.gameObject.SetActive(false);
-                AnswerRateText.text = string.Format("{0}%", Correctque * 100 / Allque);
-                ScoreText.text = string.Format("{0}点", Correctque * 100);
+                Score = Correctque * 1000;
+                AnswerRateText.text = string.Format("{0}%", Score / Allque);
+                ScoreText.text = string.Format("{0}点", Score);
+                Debug.Log(Score);
                 //ResultPanel.gameObject.SetActive(true);
                 RankingPanel.gameObject.SetActive(true);
                 break;
@@ -199,7 +203,7 @@ public class MainManager : MonoBehaviour
             r2 = UnityEngine.Random.Range(1, 9);
             //計算結果配列代入
             Con[i] = r1 + r2;
-            Debug.Log(Con[0] + " : " + Con[1]);
+            //Debug.Log(Con[0] + " : " + Con[1]);
             if(Con[0] == Con[1])
             {
                 r1 = UnityEngine.Random.Range(1, 9);
@@ -214,7 +218,7 @@ public class MainManager : MonoBehaviour
         Array.Sort(Con);
         Array.Reverse(Con);
         //----------------------------
-        //Debug.Log(Con[0] + " " + Con[1]);
+        ////Debug.Log(Con[0] + " " + Con[1]);
         //お題用処理
         ThemaNumber = UnityEngine.Random.Range(0, 2);
         //ThemaText.text = string.Format("『{0}』のはどっち？", Thema[ThemaNumber]);
@@ -222,7 +226,7 @@ public class MainManager : MonoBehaviour
         if (ThemaNumber == 0) ThemaUpDownText.color = Color.red;
         else if (ThemaNumber == 1) ThemaUpDownText.color = Color.blue;
         //-------------------------------------------------------------
-        //Debug.Log("answers : " + answers);
+        ////Debug.Log("answers : " + answers);
     }
 
     void Timer()
@@ -243,7 +247,7 @@ public class MainManager : MonoBehaviour
         Allque += 1;
         if(ThemaNumber == 0)
         {
-            Debug.Log("Pos[answers] : " + Pos[answers] + " Con[0] : " + Con[0]);
+            //Debug.Log("Pos[answers] : " + Pos[answers] + " Con[0] : " + Con[0]);
             if (Pos[answers] == Con[0])
             {
                 Answer[0].gameObject.SetActive(true);
@@ -254,7 +258,7 @@ public class MainManager : MonoBehaviour
                 }
                 
                 Correctque += 1;
-                Debug.Log("judge : true");
+                //Debug.Log("judge : true");
             }
             else
             {
@@ -264,13 +268,13 @@ public class MainManager : MonoBehaviour
                     audiosource.PlayOneShot(Clip[1]);
                     SEflg1 = false;
                 }
-                Debug.Log("judge : false");
+                //Debug.Log("judge : false");
             }
         }
 
         if(ThemaNumber == 1)
         {
-            Debug.Log("Pos[answers] : " + Pos[answers] + " Con[1] : " + Con[1]);
+            //Debug.Log("Pos[answers] : " + Pos[answers] + " Con[1] : " + Con[1]);
             if (Pos[answers] == Con[1])
             {
                 Answer[0].gameObject.SetActive(true);
@@ -280,7 +284,7 @@ public class MainManager : MonoBehaviour
                     SEflg1 = false;
                 }
                 Correctque += 1;
-                Debug.Log("judge : true");
+                //Debug.Log("judge : true");
             }
             else
             {
@@ -290,7 +294,7 @@ public class MainManager : MonoBehaviour
                     audiosource.PlayOneShot(Clip[1]);
                     SEflg1 = false;
                 }
-                Debug.Log("judge : false");
+                //Debug.Log("judge : false");
             }
         }
     }
