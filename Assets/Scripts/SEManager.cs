@@ -9,7 +9,7 @@ public class SEManager : MonoBehaviour {
 	
     private AudioSource GetSE;
 	private float Volume;
-	UnityEngine.Audio.AudioMixer mixer;
+    AudioMixer mixer;
 	private Slider slider;
 
     [SerializeField]
@@ -17,84 +17,101 @@ public class SEManager : MonoBehaviour {
     [SerializeField]
     AudioType audioType;
 
+    [SerializeField]
+    bool ChangeVolScene;
+    [SerializeField]
+    AudioMixer audiomixer;
+
     void Awake() {
+        slider = GetComponent<Slider>();
         switch (audioType)
         {
             case AudioType.BGM:
 
-                if (PlayerPrefs.HasKey("BGM")) // セーブデータ存在
+                if (PlayerPrefs.HasKey("BGMVol")) // セーブデータ存在
                 {
-                    Volume = PlayerPrefs.GetFloat("BGM");
+                    Volume = PlayerPrefs.GetFloat("BGMVol");
                 }
                 else         // セーブデータ無
                 {
-                    Volume = 10;
-                    PlayerPrefs.SetFloat("BGM", Volume);
+                    Volume = 0;
+                    PlayerPrefs.SetFloat("BGMVol", Volume);
                 }
-                gameObject.GetComponent<AudioSource>().volume = Volume / 10;
-
+                Debug.Log("BGM" + Volume);
+                audiomixer.SetFloat("BGMVol", Volume);
                 break;
 
             case AudioType.SE:
-                if (PlayerPrefs.HasKey("SE")) // セーブデータ存在
+                if (PlayerPrefs.HasKey("SEVol")) // セーブデータ存在
                 {
-                    Volume = PlayerPrefs.GetFloat("SE");
+                    Volume = PlayerPrefs.GetFloat("SEVol");
                 }
                 else         // セーブデータ無
                 {
-                    Volume = 10;
-                    PlayerPrefs.SetFloat("SE", Volume);
+                    Volume = 0;
+                    PlayerPrefs.SetFloat("SEVol", Volume);
                 }
-                gameObject.GetComponent<AudioSource>().volume = Volume / 10;
-
+                audiomixer.SetFloat("SEVol", Volume);
                 break;
         }
+        slider.value = Volume;
 
-	}
-	// Use this for initialization
-	void Start () {
-        GetSE = GetComponent<AudioSource>();
-
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void OnClick()
-    {
-        //Debug.Log("音なるで");
-        GetSE.PlayOneShot(GetSE.clip);
-    }
-		
-    public void GiveOnClick(AudioClip SE)
-    {
-        GetSE.PlayOneShot(SE);
     }
 
-	public void SliderChange() {
-		GameObject.Find ("BGMSlider").GetComponent<Slider> ().value = Volume;
-	}
+    // Use this for initialization
+    void Start()
+    {
+        switch (audioType)
+        {
+            case AudioType.BGM:
+                audiomixer.SetFloat("BGMVol", slider.value);
+                break;
 
-	public void ChangeMusicVolume(float vol){
-		Debug.Log (vol);
-		gameObject.GetComponent<AudioSource> ().volume = vol/10;
-		//mixer.SetFloat ("MusicVolume", vol);
-		PlayerPrefs.SetFloat("BGM",vol);
-	}
+            case AudioType.SE:
+                audiomixer.SetFloat("SEVol", slider.value);
+                break;
+        }
+    }
 
-	public void ChangeSfxVolume(float voll){
-		Debug.Log (voll);
-		gameObject.GetComponent<AudioSource> ().volume = voll/10;
-		//mixer.SetFloat ("SfxVolume", vol);
+
+        // Update is called once per frame
+
+    void Update () {
+
 	}
-    // BGM,SEの音量数値を保存して、他のシーンでも使える様に
 
 	public float masterVolume {
 		set {
 			mixer.SetFloat ("MasterVolume", Mathf.Lerp (-80, 0, value));
 		}
 	}
+
+    public void ChangeSlider()
+    {
+        switch (audioType)
+        {
+            case AudioType.BGM:
+                audiomixer.SetFloat("BGMVol", slider.value);
+                break;
+
+            case AudioType.SE:
+                audiomixer.SetFloat("SEVol", slider.value);
+                break;
+        }
+        Volume = slider.value;
+    }
+
+    public void SaveVolume()
+    {
+        switch(audioType)
+        {
+            case AudioType.BGM:
+                PlayerPrefs.SetFloat("BGMVol", Volume);
+                break;
+
+            case AudioType.SE:
+                PlayerPrefs.SetFloat("SEVol", Volume);
+                break;
+        }
+    }
 }
