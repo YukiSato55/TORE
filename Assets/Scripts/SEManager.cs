@@ -8,23 +8,47 @@ using UnityEngine.SceneManagement;
 public class SEManager : MonoBehaviour {
 	
     private AudioSource GetSE;
-	private float bgm;
+	private float Volume;
 	UnityEngine.Audio.AudioMixer mixer;
 	private Slider slider;
 
-	void Awake(){
-		if (SceneManager.GetActiveScene ().name == "Menu") {
-		}
-		if (PlayerPrefs.HasKey ("BGM")) // セーブデータ存在
-		{
-			bgm = PlayerPrefs.GetFloat ("BGM");
-		} else         // セーブデータ無
-		{
-			bgm = 10;
-			PlayerPrefs.SetFloat ("BGM", bgm);
-		}
-		gameObject.GetComponent<AudioSource> ().volume = bgm/10;
+    [SerializeField]
+    enum AudioType { BGM, SE }
+    [SerializeField]
+    AudioType audioType;
 
+    void Awake() {
+        switch (audioType)
+        {
+            case AudioType.BGM:
+
+                if (PlayerPrefs.HasKey("BGM")) // セーブデータ存在
+                {
+                    Volume = PlayerPrefs.GetFloat("BGM");
+                }
+                else         // セーブデータ無
+                {
+                    Volume = 10;
+                    PlayerPrefs.SetFloat("BGM", Volume);
+                }
+                gameObject.GetComponent<AudioSource>().volume = Volume / 10;
+
+                break;
+
+            case AudioType.SE:
+                if (PlayerPrefs.HasKey("SE")) // セーブデータ存在
+                {
+                    Volume = PlayerPrefs.GetFloat("SE");
+                }
+                else         // セーブデータ無
+                {
+                    Volume = 10;
+                    PlayerPrefs.SetFloat("SE", Volume);
+                }
+                gameObject.GetComponent<AudioSource>().volume = Volume / 10;
+
+                break;
+        }
 
 	}
 	// Use this for initialization
@@ -51,7 +75,7 @@ public class SEManager : MonoBehaviour {
     }
 
 	public void SliderChange() {
-		GameObject.Find ("BGMSlider").GetComponent<Slider> ().value = bgm;
+		GameObject.Find ("BGMSlider").GetComponent<Slider> ().value = Volume;
 	}
 
 	public void ChangeMusicVolume(float vol){
