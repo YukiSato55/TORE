@@ -23,10 +23,8 @@ public class MainManager : MonoBehaviour
     float timer1 = 0;
     float timer2 = 0;
     float timer3 = 0;
-    //お題用配列
-    string[] Thema = {"大きい","小さい"};
-    //解答テキスト用配列
-    public Text[] Answer = new Text[2];
+    float timer4 = 0;
+    
     //お題用テキスト
     public Text ThemaUpDownText;
     //制限時間テキスト
@@ -35,17 +33,16 @@ public class MainManager : MonoBehaviour
     //public Text AnswerRateText;
     int Allque = 0;
     int Correctque = 0;
-    //問題数
-    public Button[] Probrem;
+
     //解答判定
     int answers = 2;
     //SEフラグ
-    bool SEflg = true;
-    //スタート画面
-    public Text ReadyText;
-    public Text GoText;
+    bool SEflg1 = true;
+    bool SEflg2 = true;
+
     //リザルト画面
     public GameObject ResultPanel;
+    public GameObject RankingPanel;
     public Text AnswerRateText;
     public Text ScoreText;
 
@@ -55,16 +52,27 @@ public class MainManager : MonoBehaviour
         START,
         PLAY,
         JUDGE,
+        FINISH_BEFORE,
         FINISH,
     };
 
-    //サウンド関連
-    AudioSource audiosource;
-    public AudioClip[] Clip; 
+
     //public AudioClip CorrectClip;
     //public AudioClip InCorrectClip;
 
     GAME_MODE type = GAME_MODE.START;
+
+    //お題用配列
+    string[] Thema = { "大きい", "小さい" };
+    //解答テキスト用配列
+    public Text[] Answer = new Text[2];
+    //サウンド関連
+    AudioSource audiosource;
+    public AudioClip[] Clip;
+    //問題数
+    public Button[] Probrem;
+    //テキスト関連
+    public Text[] Texts;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,12 +81,15 @@ public class MainManager : MonoBehaviour
         //初期化処理
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
+        for (int i = 0; i < Texts.Length; i++) Texts[i].gameObject.SetActive(false);
         for (int i = 0; i < Answer.Length; i++) Answer[i].gameObject.SetActive(false);
         //------------
-        ReadyText.gameObject.SetActive(false);
-        GoText.gameObject.SetActive(false);
+        //ReadyText.gameObject.SetActive(false);
+        //GoText.gameObject.SetActive(false);
         ResultPanel.gameObject.SetActive(false);
-        display();
+        RankingPanel.gameObject.SetActive(false);
+
+        //display();
         
 
     }
@@ -91,12 +102,24 @@ public class MainManager : MonoBehaviour
         {
             case GAME_MODE.START:
                 timer1 += Time.deltaTime;
-                ReadyText.gameObject.SetActive(true);
-                GoText.gameObject.SetActive(true);
-                if (timer1 > 4)
+                Texts[0].gameObject.SetActive(true);
+                Texts[1].gameObject.SetActive(true);
+                //ReadyText.gameObject.SetActive(true);
+                //GoText.gameObject.SetActive(true);
+                if (timer1 > 3f && SEflg2)
                 {
-                    type = GAME_MODE.PLAY;
+                    audiosource.PlayOneShot(Clip[2]);
+                    SEflg2 = false;
+                }
+                if (timer1 > 5)
+                {
+                    Texts[0].gameObject.SetActive(false);
+                    Texts[1].gameObject.SetActive(false);
+                    //ReadyText.gameObject.SetActive(false);
+                    //GoText.gameObject.SetActive(false);
                     timer1 = 0;
+                    display();
+                    type = GAME_MODE.PLAY;
                 }
                 break;
             case GAME_MODE.PLAY:
@@ -116,7 +139,7 @@ public class MainManager : MonoBehaviour
                         type = GAME_MODE.JUDGE;
                     }
                 }
-                else type = GAME_MODE.FINISH;
+                else type = GAME_MODE.FINISH_BEFORE;
                 
                 break;
 
@@ -134,20 +157,39 @@ public class MainManager : MonoBehaviour
                     answersNumber += 1;
                     type = GAME_MODE.PLAY;
                     timer3 = 0;
-                    SEflg = true;
+                    SEflg1 = true;
+                }
+                break;
+
+            case GAME_MODE.FINISH_BEFORE:
+                SEflg2 = true;
+                timer4 += Time.deltaTime;           
+                if (timer4 < 0.05f && SEflg2)
+                {
+                    audiosource.PlayOneShot(Clip[3]);
+                    SEflg2 = false;
+                }
+                Texts[2].gameObject.SetActive(true);
+                if (timer4 > 3)
+                {
+                    Texts[2].gameObject.SetActive(false);
+                    type = GAME_MODE.FINISH;
                 }
                 break;
 
             case GAME_MODE.FINISH:
+                ThemaUpDownText.gameObject.SetActive(false);
                 AnswerRateText.text = string.Format("{0}%", Correctque * 100 / Allque);
                 ScoreText.text = string.Format("{0}点", Correctque * 100);
-                ResultPanel.gameObject.SetActive(true);
+                //ResultPanel.gameObject.SetActive(true);
+                RankingPanel.gameObject.SetActive(true);
                 break;
         }
     }
 
     void display()
     {
+
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
         for (int i = 0; i < Probrem.Length; i++)
@@ -205,10 +247,10 @@ public class MainManager : MonoBehaviour
             if (Pos[answers] == Con[0])
             {
                 Answer[0].gameObject.SetActive(true);
-                if (SEflg)
+                if (SEflg1)
                 {
                     audiosource.PlayOneShot(Clip[0]);
-                    SEflg = false;
+                    SEflg1 = false;
                 }
                 
                 Correctque += 1;
@@ -217,10 +259,10 @@ public class MainManager : MonoBehaviour
             else
             {
                 Answer[1].gameObject.SetActive(true);
-                if (SEflg)
+                if (SEflg1)
                 {
                     audiosource.PlayOneShot(Clip[1]);
-                    SEflg = false;
+                    SEflg1 = false;
                 }
                 Debug.Log("judge : false");
             }
@@ -232,10 +274,10 @@ public class MainManager : MonoBehaviour
             if (Pos[answers] == Con[1])
             {
                 Answer[0].gameObject.SetActive(true);
-                if (SEflg)
+                if (SEflg1)
                 {
                     audiosource.PlayOneShot(Clip[0]);
-                    SEflg = false;
+                    SEflg1 = false;
                 }
                 Correctque += 1;
                 Debug.Log("judge : true");
@@ -243,10 +285,10 @@ public class MainManager : MonoBehaviour
             else
             {
                 Answer[1].gameObject.SetActive(true);
-                if (SEflg)
+                if (SEflg1)
                 {
                     audiosource.PlayOneShot(Clip[1]);
-                    SEflg = false;
+                    SEflg1 = false;
                 }
                 Debug.Log("judge : false");
             }
