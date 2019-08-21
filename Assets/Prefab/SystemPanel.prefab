@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save
+  m_Text: "\u4FDD\u5B58\u3059\u308B"
 --- !u!1 &1619308327
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,8 +301,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 5051295941430869474}
   m_HandleRect: {fileID: 5051295940401352094}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 20
+  m_MinValue: -20
+  m_MaxValue: 10
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -624,8 +624,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 5051295941471951999}
   m_HandleRect: {fileID: 5051295941315411009}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 20
+  m_MinValue: -20
+  m_MaxValue: 10
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -1687,7 +1687,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30B2\u30FC\u30E0\u3092\u3084\u3081\u308B"
+  m_Text: "\u9589\u3058\u308B"
 --- !u!114 &5051295941740667697
 MonoBehaviour:
   m_ObjectHideFlags: 0
