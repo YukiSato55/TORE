@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SEManager : MonoBehaviour {
 	
     private AudioSource GetSE;
+    AudioClip SE;
 	private float Volume;
     AudioMixer mixer;
 	private Slider slider;
@@ -24,6 +25,7 @@ public class SEManager : MonoBehaviour {
 
     void Awake() {
         slider = GetComponent<Slider>();
+        GetSE = GetComponent<AudioSource>();
         switch (audioType)
         {
             case AudioType.BGM:
@@ -74,11 +76,12 @@ public class SEManager : MonoBehaviour {
     }
 
 
-        // Update is called once per frame
+    // Update is called once per frame
 
-    void Update () {
+    void Update()
+    {
 
-	}
+    }
 
 	public float masterVolume {
 		set {
@@ -96,9 +99,15 @@ public class SEManager : MonoBehaviour {
 
             case AudioType.SE:
                 audiomixer.SetFloat("SEVol", slider.value);
+
                 break;
         }
         Volume = slider.value;
+    }
+
+    public void ClickUp()
+    {
+        GetSE.Play();
     }
 
     public void SaveVolume()
