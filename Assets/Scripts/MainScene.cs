@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-public class SceneChange : MonoBehaviour
+public class MainScene : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -15,9 +14,18 @@ public class SceneChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetMouseButtonDown(0))
-		{
-			SceneManager.LoadScene("Main");
-		}
+        
     }
+	public void GoMaingame()
+	{
+		SceneManager.LoadScene("MainGame");
+	}
+	public void Config()
+	{
+		SceneManager.LoadScene("MainGame");
+	}
+	public void Ranking()
+	{
+		SceneManager.LoadScene("MainGame");
+	}
 }
