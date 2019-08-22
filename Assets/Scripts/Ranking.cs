@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.UI;
+using System;
 
 public class Ranking : MonoBehaviour
 {
@@ -12,31 +13,53 @@ public class Ranking : MonoBehaviour
     */
     //表示用テキスト
     public Text[] ScoreText;
+    int[] ScoreInt;
     //仮の変数
     int Provisional;
+    //スコア取得
+    [System.NonSerialized]
+    public MainManager mainmanager;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        int Score;
+        mainmanager = GameObject.Find("GameManager").GetComponent<MainManager>();
+        Score = mainmanager.Score;
+        Provisional = ScoreText.Length * 10000;
+        ScoreInt = new int[ScoreText.Length];
+        for (int i = 0; i < ScoreInt.Length; i++) ScoreInt[i] = 0;
+
+
         if (PlayerPrefs.HasKey("Ranking"))
         {
+            ScoreInt = PlayerPrefsX.GetIntArray("Ranking");
             for (int i = 0; i < ScoreText.Length; i++)
             {
-                ScoreText[i].text = PlayerPrefs.GetInt("Ranking", i).ToString();
+                ScoreText[i].text = ScoreInt[i].ToString();         
             }
+
         }
         else
         {
-            Provisional = ScoreText.Length * 10000;
+            Debug.Log(ScoreInt);
             for(int i = 0;i < ScoreText.Length; i++)
             {
-                ScoreText[i].text = Provisional.ToString();
+                ScoreInt[i] = Provisional;
+                ScoreText[i].text = ScoreInt[i].ToString();
                 Provisional -= 10000;               
             }
         }
 
-        //スコアのロード
-        //score_num = PlayerPrefs.GetInt("SCORE", 0);
+        if (ScoreInt[ScoreInt.Length - 1] <= Score)
+        {
+            ScoreInt[ScoreInt.Length - 1] = Score;
+            Array.Sort(ScoreInt);
+            Array.Reverse(ScoreInt);
+            for(int i = 0;i < ScoreInt.Length;i++)ScoreText[i].text = ScoreInt[i].ToString();
+        }
+
     }
 
     //削除時の処理
@@ -47,6 +70,12 @@ public class Ranking : MonoBehaviour
         PlayerPrefs.SetInt("SCORE", score_num);
         PlayerPrefs.Save();
         */
+        PlayerPrefsX.SetIntArray("Ranking", ScoreInt);
+        PlayerPrefs.Save();
+
+        //保存データの削除
+        PlayerPrefs.DeleteAll();
+
     }
 
     // Update is called once per frame
