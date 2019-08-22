@@ -182,11 +182,12 @@ public class MainManager : MonoBehaviour
             case GAME_MODE.FINISH:
                 ThemaUpDownText.gameObject.SetActive(false);
                 Score = Correctque * 1000;
+                if (Correctque == 0) Score = 0;
                 AnswerRateText.text = string.Format("{0}%", Score / Allque);
                 ScoreText.text = string.Format("{0}点", Score);
                 Debug.Log(Score);
-                //ResultPanel.gameObject.SetActive(true);
-                RankingPanel.gameObject.SetActive(true);
+                ResultPanel.gameObject.SetActive(true);
+                //RankingPanel.gameObject.SetActive(true);
                 break;
         }
     }
