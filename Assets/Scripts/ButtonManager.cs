@@ -30,6 +30,7 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene("MainGame");
     }
 
+
     public void RankingOpen()
     {
         RankingPanel.SetActive(true);
