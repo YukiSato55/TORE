@@ -37,23 +37,9 @@ public class Ranking : MonoBehaviour
             ScoreInt = PlayerPrefsX.GetIntArray("Ranking");
             for (int i = 0; i < ScoreText.Length; i++)
             {
-                //ScoreInt[i] = Provisional;
-                ScoreText[i].text = ScoreInt[i].ToString();
-                //Provisional -= 10000;             
+                ScoreText[i].text = ScoreInt[i].ToString();         
             }
-            /*for (int i = 0;i < ScoreText.Length; i++)
-            {
-                if(ScoreInt[i] < Score)
-                {
-                    int k = i;
-                    for(int j = i + 1;j < ScoreInt.Length; j++)
-                    {
-                        ScoreIntAno[j] = ScoreInt[k];
-                        k++;
-                    }
-                }
-                ScoreText[i].text = PlayerPrefs.GetInt("Ranking", i).ToString();
-            }*/
+
         }
         else
         {
@@ -71,10 +57,9 @@ public class Ranking : MonoBehaviour
             ScoreInt[ScoreInt.Length - 1] = Score;
             Array.Sort(ScoreInt);
             Array.Reverse(ScoreInt);
+            for(int i = 0;i < ScoreInt.Length;i++)ScoreText[i].text = ScoreInt[i].ToString();
         }
 
-        //スコアのロード
-        //score_num = PlayerPrefs.GetInt("SCORE", 0);
     }
 
     //削除時の処理
@@ -85,10 +70,11 @@ public class Ranking : MonoBehaviour
         PlayerPrefs.SetInt("SCORE", score_num);
         PlayerPrefs.Save();
         */
-        //PlayerPrefs.SetInt("SCORE",0);
-        //PlayerPrefs.Save();
         PlayerPrefsX.SetIntArray("Ranking", ScoreInt);
         PlayerPrefs.Save();
+
+        //保存データの削除
+        PlayerPrefs.DeleteAll();
 
     }
 
