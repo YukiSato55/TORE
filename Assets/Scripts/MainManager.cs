@@ -99,6 +99,7 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //PlayerPrefs.DeleteKey("Ranking");
         
         switch (type)
         {
@@ -180,12 +181,13 @@ public class MainManager : MonoBehaviour
                 break;
 
             case GAME_MODE.FINISH:
+                
                 ThemaUpDownText.gameObject.SetActive(false);
-                Score = Correctque * 1000;
+                Score = Correctque * 10000;
                 if (Correctque == 0) Score = 0;
                 AnswerRateText.text = string.Format("{0}%", Score / Allque);
                 ScoreText.text = string.Format("{0}点", Score);
-                Debug.Log(Score);
+                
                 ResultPanel.gameObject.SetActive(true);
                 //RankingPanel.gameObject.SetActive(true);
                 break;
@@ -254,11 +256,12 @@ public class MainManager : MonoBehaviour
                 Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
                 }
                 
-                Correctque += 1;
+                
                 //Debug.Log("judge : true");
             }
             else
@@ -281,10 +284,11 @@ public class MainManager : MonoBehaviour
                 Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
                 }
-                Correctque += 1;
+                
                 //Debug.Log("judge : true");
             }
             else
