@@ -34,6 +34,7 @@ public class Ranking : MonoBehaviour
 
         if (PlayerPrefs.HasKey("Ranking"))
         {
+            Debug.Log("データあり");
             ScoreInt = PlayerPrefsX.GetIntArray("Ranking");
             for (int i = 0; i < ScoreText.Length; i++)
             {
@@ -74,7 +75,7 @@ public class Ranking : MonoBehaviour
         PlayerPrefs.Save();
 
         //保存データの削除
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteKey("Ranking");
 
     }
 
