@@ -39,6 +39,8 @@ public class MainManager : MonoBehaviour
     //SEフラグ
     bool SEflg1 = true;
     bool SEflg2 = true;
+    //Jughtフラグ
+    bool Jughtflg = true;
 
     //リザルト画面
     public GameObject ResultPanel;
@@ -140,6 +142,7 @@ public class MainManager : MonoBehaviour
                     //-----------------------------------------
                     if (answers != 2)
                     {
+                        Allque++;
                         type = GAME_MODE.JUDGE;
                     }
                 }
@@ -148,7 +151,9 @@ public class MainManager : MonoBehaviour
                 break;
 
             case GAME_MODE.JUDGE:
+                
                 judge();
+
                 timer3 += Time.deltaTime;
                 if (timer3 >= 2)
                 {
@@ -163,6 +168,7 @@ public class MainManager : MonoBehaviour
                     timer3 = 0;
                     SEflg1 = true;
                 }
+                Jughtflg = true;
                 break;
 
             case GAME_MODE.FINISH_BEFORE:
@@ -186,7 +192,8 @@ public class MainManager : MonoBehaviour
                 ThemaUpDownText.gameObject.SetActive(false);
                 Score = Correctque * 10000;
                 if (Correctque == 0) Score = 0;
-                AnswerRateText.text = string.Format("{0}%", Score / Allque);
+                Debug.Log("Correctque : " + Correctque + " Allque : " + Allque);
+                AnswerRateText.text = string.Format("{0}%", (Correctque * 100) / Allque);
                 ScoreText.text = string.Format("{0}点", Score);
                 
                 ResultPanel.gameObject.SetActive(true);
@@ -248,18 +255,26 @@ public class MainManager : MonoBehaviour
 
     void judge()
     {
-        Allque += 1;
-        if(ThemaNumber == 0)
+        
+        if (ThemaNumber == 0)
         {
+            //Allque += 1;
             //Debug.Log("Pos[answers] : " + Pos[answers] + " Con[0] : " + Con[0]);
             if (Pos[answers] == Con[0])
             {
                 Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    /*Jughtflg = true;
+                    if (Jughtflg)
+                    {
+                        Allque++;
+                        Jughtflg = false;
+                    }*/
                     Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
+
                 }
                 
                 
@@ -279,12 +294,14 @@ public class MainManager : MonoBehaviour
 
         if(ThemaNumber == 1)
         {
+            //Allque += 1;
             //Debug.Log("Pos[answers] : " + Pos[answers] + " Con[1] : " + Con[1]);
             if (Pos[answers] == Con[1])
             {
                 Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    
                     Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
