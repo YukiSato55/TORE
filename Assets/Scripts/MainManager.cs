@@ -102,6 +102,7 @@ public class MainManager : MonoBehaviour
     void Update()
     {
         //PlayerPrefs.DeleteKey("Ranking");
+        Debug.Log(Jughtflg);
         
         switch (type)
         {
@@ -157,6 +158,7 @@ public class MainManager : MonoBehaviour
                 timer3 += Time.deltaTime;
                 if (timer3 >= 2)
                 {
+                    Jughtflg = true;
                     if (Answer[0].isActiveAndEnabled)Answer[0].gameObject.SetActive(false);
                     if (Answer[1].isActiveAndEnabled) Answer[1].gameObject.SetActive(false);
                     
@@ -168,7 +170,6 @@ public class MainManager : MonoBehaviour
                     timer3 = 0;
                     SEflg1 = true;
                 }
-                Jughtflg = true;
                 break;
 
             case GAME_MODE.FINISH_BEFORE:
@@ -190,7 +191,7 @@ public class MainManager : MonoBehaviour
             case GAME_MODE.FINISH:
                 
                 ThemaUpDownText.gameObject.SetActive(false);
-                Score = Correctque * 10000;
+                Score = Correctque * 100;
                 if (Correctque == 0) Score = 0;
                 Debug.Log("Correctque : " + Correctque + " Allque : " + Allque);
                 AnswerRateText.text = string.Format("{0}%", (Correctque * 100) / Allque);
@@ -250,7 +251,7 @@ public class MainManager : MonoBehaviour
 
     public void Button(int i)
     {
-        answers = i;
+        if (Jughtflg)answers = i;
     }
 
     void judge()
@@ -262,23 +263,15 @@ public class MainManager : MonoBehaviour
             //Debug.Log("Pos[answers] : " + Pos[answers] + " Con[0] : " + Con[0]);
             if (Pos[answers] == Con[0])
             {
-                Answer[0].gameObject.SetActive(true);
+                if (Jughtflg)
+                    Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
-                    /*Jughtflg = true;
-                    if (Jughtflg)
-                    {
-                        Allque++;
-                        Jughtflg = false;
-                    }*/
                     Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
 
                 }
-                
-                
-                //Debug.Log("judge : true");
             }
             else
             {
@@ -288,17 +281,15 @@ public class MainManager : MonoBehaviour
                     audiosource.PlayOneShot(Clip[1]);
                     SEflg1 = false;
                 }
-                //Debug.Log("judge : false");
             }
         }
 
         if(ThemaNumber == 1)
         {
-            //Allque += 1;
-            //Debug.Log("Pos[answers] : " + Pos[answers] + " Con[1] : " + Con[1]);
             if (Pos[answers] == Con[1])
             {
-                Answer[0].gameObject.SetActive(true);
+                if (Jughtflg)
+                    Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
                     
@@ -306,8 +297,6 @@ public class MainManager : MonoBehaviour
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
                 }
-                
-                //Debug.Log("judge : true");
             }
             else
             {
@@ -317,8 +306,8 @@ public class MainManager : MonoBehaviour
                     audiosource.PlayOneShot(Clip[1]);
                     SEflg1 = false;
                 }
-                //Debug.Log("judge : false");
             }
         }
+        Jughtflg = false;
     }
 }
