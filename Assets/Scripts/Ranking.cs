@@ -27,7 +27,7 @@ public class Ranking : MonoBehaviour
         int Score;
         mainmanager = GameObject.Find("GameManager").GetComponent<MainManager>();
         Score = mainmanager.Score;
-        Provisional = ScoreText.Length * 10000;
+        Provisional = ScoreText.Length * 100;
         ScoreInt = new int[ScoreText.Length];
         for (int i = 0; i < ScoreInt.Length; i++) ScoreInt[i] = 0;
 
@@ -75,7 +75,7 @@ public class Ranking : MonoBehaviour
         PlayerPrefs.Save();
 
         //保存データの削除
-        //PlayerPrefs.DeleteKey("Ranking");
+        PlayerPrefs.DeleteKey("Ranking");
 
     }
 
