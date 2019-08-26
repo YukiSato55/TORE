@@ -79,7 +79,7 @@ public class MainManager : MonoBehaviour
     void Start()
     {
         audiosource = GetComponent<AudioSource>();
-        TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
+        //TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
         //初期化処理
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
@@ -104,6 +104,7 @@ public class MainManager : MonoBehaviour
         switch (type)
         {
             case GAME_MODE.START:
+                TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
                 timer1 += Time.deltaTime;
                 Texts[0].gameObject.SetActive(true);
                 Texts[1].gameObject.SetActive(true);

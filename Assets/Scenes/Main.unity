@@ -442,7 +442,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 621608914}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 682779749}
+        m_MethodName: MainGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &621608914
@@ -638,6 +649,7 @@ GameObject:
   - component: {fileID: 682779748}
   - component: {fileID: 682779747}
   - component: {fileID: 682779749}
+  - component: {fileID: 682779750}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -685,6 +697,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RankingPanel: {fileID: 557384381}
   ResultPanel: {fileID: 0}
+--- !u!114 &682779750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682779746}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049b521ef62f33949a2d447a25afe9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timelimit: 0
+  ThemaUpDownText: {fileID: 0}
+  TimelimitText: {fileID: 0}
+  ResultPanel: {fileID: 0}
+  RankingPanel: {fileID: 0}
+  AnswerRateText: {fileID: 0}
+  ScoreText: {fileID: 0}
+  Answer:
+  - {fileID: 0}
+  - {fileID: 0}
+  Clip: []
+  Probrem: []
+  Texts:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &684587997
 GameObject:
   m_ObjectHideFlags: 0
