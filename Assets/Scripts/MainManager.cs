@@ -79,7 +79,7 @@ public class MainManager : MonoBehaviour
     void Start()
     {
         audiosource = GetComponent<AudioSource>();
-        TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
+        //TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
         //初期化処理
         for (int i = 0; i < Con.Length; i++) Con[i] = 0;
         for (int i = 0; i < Pos.Length; i++) Pos[i] = 0;
@@ -99,10 +99,12 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //PlayerPrefs.DeleteKey("Ranking");
         
         switch (type)
         {
             case GAME_MODE.START:
+                TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
                 timer1 += Time.deltaTime;
                 Texts[0].gameObject.SetActive(true);
                 Texts[1].gameObject.SetActive(true);
@@ -180,12 +182,13 @@ public class MainManager : MonoBehaviour
                 break;
 
             case GAME_MODE.FINISH:
+                
                 ThemaUpDownText.gameObject.SetActive(false);
-                Score = Correctque * 1000;
+                Score = Correctque * 10000;
                 if (Correctque == 0) Score = 0;
                 AnswerRateText.text = string.Format("{0}%", Score / Allque);
                 ScoreText.text = string.Format("{0}点", Score);
-                Debug.Log(Score);
+                
                 ResultPanel.gameObject.SetActive(true);
                 //RankingPanel.gameObject.SetActive(true);
                 break;
@@ -254,11 +257,12 @@ public class MainManager : MonoBehaviour
                 Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
                 }
                 
-                Correctque += 1;
+                
                 //Debug.Log("judge : true");
             }
             else
@@ -281,10 +285,11 @@ public class MainManager : MonoBehaviour
                 Answer[0].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    Correctque += 1;
                     audiosource.PlayOneShot(Clip[0]);
                     SEflg1 = false;
                 }
-                Correctque += 1;
+                
                 //Debug.Log("judge : true");
             }
             else
