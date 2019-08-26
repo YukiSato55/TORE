@@ -615,9 +615,7 @@ GameObject:
   - component: {fileID: 143964607}
   - component: {fileID: 143964606}
   m_Layer: 5
-
   m_Name: RankingButton
-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2364,7 +2362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049b521ef62f33949a2d447a25afe9dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Timelimit: 10
+  Timelimit: 5
   ThemaUpDownText: {fileID: 2084141658}
   TimelimitText: {fileID: 420264518}
   ResultPanel: {fileID: 85754446}
