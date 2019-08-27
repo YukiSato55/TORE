@@ -43,7 +43,8 @@ public class Ranking : MonoBehaviour
             ScoreInt = PlayerPrefsX.GetFloatArray("Ranking");
             for (int i = 0; i < ScoreText.Length; i++)
             {
-                ScoreText[i].text = ScoreInt[i].ToString();         
+                //ScoreText[i].text = ScoreInt[i].ToString();
+                ScoreText[i].text = string.Format("{0}点", ScoreInt[i].ToString());
             }
 
         }
@@ -53,7 +54,8 @@ public class Ranking : MonoBehaviour
             for(int i = 0;i < ScoreText.Length; i++)
             {
                 ScoreInt[i] = Provisional;
-                ScoreText[i].text = ScoreInt[i].ToString();
+                ScoreText[i].text = string.Format("{0}点", ScoreInt[i].ToString());
+                //ScoreText[i].text = ScoreInt[i].ToString();
                 Provisional -= 100;               
             }
         }
