@@ -2400,7 +2400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049b521ef62f33949a2d447a25afe9dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Timelimit: 5
+  Timelimit: 30
   ThemaUpDownText: {fileID: 2084141658}
   TimelimitText: {fileID: 420264518}
   ResultPanel: {fileID: 85754446}
@@ -3944,6 +3944,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PausePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923011760536907327, guid: e069d70052cc4c34e8050682127bb5ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6923011760536907312, guid: e069d70052cc4c34e8050682127bb5ec,
         type: 3}
