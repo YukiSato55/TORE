@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainScene : MonoBehaviour
 {
+	public GameObject BGM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class MainScene : MonoBehaviour
 	}
 	public void Config()
 	{
-		SceneManager.LoadScene("MainGame");
+		BGM.SetActive(true);
 	}
 	public void Ranking()
 	{
