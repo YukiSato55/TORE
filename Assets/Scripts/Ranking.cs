@@ -49,7 +49,7 @@ public class Ranking : MonoBehaviour
             {
                 ScoreInt[i] = Provisional;
                 ScoreText[i].text = ScoreInt[i].ToString();
-                Provisional -= 10000;               
+                Provisional -= 100;               
             }
         }
 

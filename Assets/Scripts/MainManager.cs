@@ -194,7 +194,9 @@ public class MainManager : MonoBehaviour
                 Score = Correctque * 100;
                 if (Correctque == 0) Score = 0;
                 Debug.Log("Correctque : " + Correctque + " Allque : " + Allque);
-                AnswerRateText.text = string.Format("{0}%", (Correctque * 100) / Allque);
+                Debug.Log(Score);
+                if(Score == 0) AnswerRateText.text = string.Format("{0}%", 0);
+                else AnswerRateText.text = string.Format("{0}%", Score / Allque);
                 ScoreText.text = string.Format("{0}点", Score);
                 
                 ResultPanel.gameObject.SetActive(true);
