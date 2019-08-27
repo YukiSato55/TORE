@@ -33,6 +33,8 @@ public class MainManager : MonoBehaviour
     //public Text AnswerRateText;
     int Allque = 0;
     int Correctque = 0;
+    int AnswerRate = 0;
+    float magnification = 0;
 
     //解答判定
     int answers = 2;
@@ -41,6 +43,9 @@ public class MainManager : MonoBehaviour
     bool SEflg2 = true;
     //Jughtフラグ
     bool Jughtflg = true;
+    //ポーズフラグ
+    [System.NonSerialized]
+    public bool Pauseflg = false;
 
     //リザルト画面
     public GameObject ResultPanel;
@@ -49,6 +54,7 @@ public class MainManager : MonoBehaviour
     public Text ScoreText;
     [System.NonSerialized]
     public int Score = 0;
+    public float ConfirmScore = 0;
 
 
     enum GAME_MODE
@@ -80,6 +86,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         audiosource = GetComponent<AudioSource>();
         //TimelimitText.text = string.Format("残り時間：{0}", Timelimit);
         //初期化処理
@@ -130,6 +137,7 @@ public class MainManager : MonoBehaviour
                 }
                 break;
             case GAME_MODE.PLAY:
+                Pauseflg = true;
                 timer2 += Time.deltaTime;
                 if(Timelimit != 0)
                 {
@@ -174,6 +182,7 @@ public class MainManager : MonoBehaviour
 
             case GAME_MODE.FINISH_BEFORE:
                 SEflg2 = true;
+                Pauseflg = false;
                 timer4 += Time.deltaTime;           
                 if (timer4 < 0.05f && SEflg2)
                 {
@@ -193,11 +202,20 @@ public class MainManager : MonoBehaviour
                 ThemaUpDownText.gameObject.SetActive(false);
                 Score = Correctque * 100;
                 if (Correctque == 0) Score = 0;
-                Debug.Log("Correctque : " + Correctque + " Allque : " + Allque);
-                Debug.Log(Score);
-                if(Score == 0) AnswerRateText.text = string.Format("{0}%", 0);
-                else AnswerRateText.text = string.Format("{0}%", Score / Allque);
-                ScoreText.text = string.Format("{0}点", Score);
+                //Debug.Log("Correctque : " + Correctque + " Allque : " + Allque);
+                //Debug.Log(Score);
+                if (Score == 0) AnswerRate = 0;
+                else AnswerRate = Score / Allque;
+                if(Score == 0 || AnswerRate == 0) AnswerRateText.text = string.Format("{0}%", 0);
+                else AnswerRateText.text = string.Format("{0}%", AnswerRate);
+                if (AnswerRate <= 50) magnification = 1f;
+                else if (AnswerRate <= 60 && AnswerRate > 50) magnification = 2;
+                else if (AnswerRate <= 70 && AnswerRate > 60) magnification = 3;
+                else if (AnswerRate <= 80 && AnswerRate > 70) magnification = 4;
+                else if (AnswerRate <= 90 && AnswerRate > 80) magnification = 5;
+                else if (AnswerRate == 100) magnification = 6;
+                ConfirmScore = Score * magnification;
+                ScoreText.text = string.Format("{0}点", ConfirmScore);
                 
                 ResultPanel.gameObject.SetActive(true);
                 //RankingPanel.gameObject.SetActive(true);
