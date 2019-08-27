@@ -8,10 +8,14 @@ public class ButtonManager : MonoBehaviour
 {
     public GameObject RankingPanel;
     public GameObject ResultPanel;
+    public GameObject PausePanel;
+    MainManager mainmanager;
     // Start is called before the first frame update
     void Start()
     {
+        mainmanager = GameObject.Find("GameManager").GetComponent<MainManager>();
         RankingPanel.SetActive(false);
+        PausePanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -52,5 +56,25 @@ public class ButtonManager : MonoBehaviour
     {
         RankingPanel.SetActive(false);
         ResultPanel.SetActive(true);
+    }
+
+    public void Pause()
+    {
+        if (mainmanager.Pauseflg)
+        {
+            PausePanel.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
+    public void Resume()
+    {
+        PausePanel.gameObject.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void Reload()
+    {
+        Scene loadScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(loadScene.name);
     }
 }

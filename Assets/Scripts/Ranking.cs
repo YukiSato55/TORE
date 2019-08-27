@@ -13,7 +13,8 @@ public class Ranking : MonoBehaviour
     */
     //表示用テキスト
     public Text[] ScoreText;
-    int[] ScoreInt;
+    //int[] ScoreInt;
+    float[] ScoreInt;
     //仮の変数
     int Provisional;
     //スコア取得
@@ -24,18 +25,22 @@ public class Ranking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int Score;
+        //int Score;
+        float Score;
         mainmanager = GameObject.Find("GameManager").GetComponent<MainManager>();
-        Score = mainmanager.Score;
+        //Score = mainmanager.Score;
+        Score = mainmanager.ConfirmScore;
         Provisional = ScoreText.Length * 100;
-        ScoreInt = new int[ScoreText.Length];
+        //ScoreInt = new int[ScoreText.Length];
+        ScoreInt = new float[ScoreText.Length];
         for (int i = 0; i < ScoreInt.Length; i++) ScoreInt[i] = 0;
 
 
         if (PlayerPrefs.HasKey("Ranking"))
         {
             Debug.Log("データあり");
-            ScoreInt = PlayerPrefsX.GetIntArray("Ranking");
+            //ScoreInt = PlayerPrefsX.GetIntArray("Ranking");
+            ScoreInt = PlayerPrefsX.GetFloatArray("Ranking");
             for (int i = 0; i < ScoreText.Length; i++)
             {
                 ScoreText[i].text = ScoreInt[i].ToString();         
@@ -71,11 +76,12 @@ public class Ranking : MonoBehaviour
         PlayerPrefs.SetInt("SCORE", score_num);
         PlayerPrefs.Save();
         */
-        PlayerPrefsX.SetIntArray("Ranking", ScoreInt);
+        //PlayerPrefsX.SetIntArray("Ranking", ScoreInt);
+        PlayerPrefsX.SetFloatArray("Ranking", ScoreInt);
         PlayerPrefs.Save();
 
         //保存データの削除
-        PlayerPrefs.DeleteKey("Ranking");
+        //PlayerPrefs.DeleteKey("Ranking");
 
     }
 
