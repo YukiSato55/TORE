@@ -33,6 +33,7 @@ public class MainManager : MonoBehaviour
     //public Text AnswerRateText;
     int Allque = 0;
     int Correctque = 0;
+    int InCorrectque = 0;
     int AnswerRate = 0;
     float magnification = 0;
 
@@ -208,13 +209,14 @@ public class MainManager : MonoBehaviour
                 else AnswerRate = Score / Allque;
                 if(Score == 0 || AnswerRate == 0) AnswerRateText.text = string.Format("{0}%", 0);
                 else AnswerRateText.text = string.Format("{0}%", AnswerRate);
-                if (AnswerRate <= 50) magnification = 1f;
+                /*if (AnswerRate <= 50) magnification = 1f;
                 else if (AnswerRate <= 60 && AnswerRate > 50) magnification = 2;
                 else if (AnswerRate <= 70 && AnswerRate > 60) magnification = 3;
                 else if (AnswerRate <= 80 && AnswerRate > 70) magnification = 4;
                 else if (AnswerRate <= 90 && AnswerRate > 80) magnification = 5;
-                else if (AnswerRate == 100) magnification = 6;
-                ConfirmScore = Score * magnification;
+                else if (AnswerRate == 100) magnification = 6;*/
+                ConfirmScore = Score - (100 * InCorrectque);
+                if (ConfirmScore < 0) ConfirmScore = 0;
                 ScoreText.text = string.Format("{0}点", ConfirmScore);
                 
                 ResultPanel.gameObject.SetActive(true);
@@ -298,6 +300,8 @@ public class MainManager : MonoBehaviour
                 Answer[1].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    //Debug.Log("asddfghj");
+                    InCorrectque++;
                     audiosource.PlayOneShot(Clip[1]);
                     SEflg1 = false;
                 }
@@ -323,6 +327,7 @@ public class MainManager : MonoBehaviour
                 Answer[1].gameObject.SetActive(true);
                 if (SEflg1)
                 {
+                    InCorrectque++;
                     audiosource.PlayOneShot(Clip[1]);
                     SEflg1 = false;
                 }
