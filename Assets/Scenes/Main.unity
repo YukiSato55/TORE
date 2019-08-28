@@ -124,6 +124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PausePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 6923011760536907327, guid: e069d70052cc4c34e8050682127bb5ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6923011760536907312, guid: e069d70052cc4c34e8050682127bb5ec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2000,6 +2005,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.43529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4648039237080951328, guid: 77e1986d4d4cc7a4e9931094bb66f772,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bb35f6d472f6a824892cccecf3ec5326,
+        type: 3}
+    - target: {fileID: 4648039237080951328, guid: 77e1986d4d4cc7a4e9931094bb66f772,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77e1986d4d4cc7a4e9931094bb66f772, type: 3}
