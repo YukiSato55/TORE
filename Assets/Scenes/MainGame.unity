@@ -2552,7 +2552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049b521ef62f33949a2d447a25afe9dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Timelimit: 5
+  Timelimit: 30
   ThemaUpDownText: {fileID: 2084141658}
   TimelimitText: {fileID: 420264518}
   ResultPanel: {fileID: 85754446}
