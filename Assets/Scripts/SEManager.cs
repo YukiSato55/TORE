@@ -24,7 +24,6 @@ public class SEManager : MonoBehaviour {
     AudioMixer audiomixer;
 
     void Awake() {
-        slider = GetComponent<Slider>();
         GetSE = GetComponent<AudioSource>();
         switch (audioType)
         {
@@ -56,7 +55,11 @@ public class SEManager : MonoBehaviour {
                 audiomixer.SetFloat("SEVol", Volume);
                 break;
         }
-        slider.value = Volume;
+        if (ChangeVolScene)
+        {
+            slider = GetComponent<Slider>();
+            slider.value = Volume;
+        }
 
     }
 
@@ -66,11 +69,11 @@ public class SEManager : MonoBehaviour {
         switch (audioType)
         {
             case AudioType.BGM:
-                audiomixer.SetFloat("BGMVol", slider.value);
+                audiomixer.SetFloat("BGMVol", Volume);
                 break;
 
             case AudioType.SE:
-                audiomixer.SetFloat("SEVol", slider.value);
+                audiomixer.SetFloat("SEVol", Volume);
                 break;
         }
     }
