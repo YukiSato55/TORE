@@ -34,6 +34,11 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene("MainGame");
     }
 
+    public void MainButton()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
 
     public void RankingOpen()
     {
